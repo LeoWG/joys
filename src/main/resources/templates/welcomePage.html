@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<ul style="font-size: 20px">
+    <li>这个页面不出意外你们只会看到一次，所以有些内容看仔细</li>
+    <li>这暂时还没有给人评论的功能,以及评论提醒功能</li>
+    <li>想和好友互动可以在自己评论区用：(好友用户名/评论No.号)来进行互动</li>
+    <li>用户名可以自己随便取（最好有意义），但是不能更改，所以慎重（不会给你改数据库的hh）</li>
+    <li>和谐评论！！和谐评论！！和谐评论！！</li>
+</ul>
+<div style="margin-top: 50px">
+    <form action="/joys/user/userLogin" method="post">
+        <a style="font-size: 30px">随便取个名字吧：</a><input style="height: 50px;" type="text" name="username" /><p style="color: red;" th:if="${message}">用户名已经被使用，请重新输入</p><br>
+        <input style="width: 100px;height: 50px;margin-top: 20px;margin-left: 75px;font-size: 16px" type="submit" value="登录" />
+    </form>
+</div>
+</body>
+</html>

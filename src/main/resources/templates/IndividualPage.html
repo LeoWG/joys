@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+</head>
+<br>
+<h1 th:text="你好+${username}+，以下是评论区"></h1></br>
+<form action="/joys/user/commentsCommit" method="post">
+    <textarea maxlength="90" style="height: 250px;width: 250px" placeholder="请输入······" name="comments"></textarea></br>
+    <input style="width: 100px;height: 50px;margin-top: 20px;margin-left: 75px;font-size: 16px;"  type="submit" value="提交"/>
+</form>
+<button style="width: 100px;height: 50px;margin-top: 20px;margin-left: 75px;font-size: 16px;" onclick="forward();">用户列表</button></br>
+<button style="width: 100px;height: 50px;margin-top: 20px;margin-left: 75px;font-size: 16px;" onclick="commonArea();">公共评论</button>
+<p style="color: red;" th:if="${flag}">内容不能为空！</p>
+</body>
+<script>
+    function  forward(){
+        window.location.href="/joys/user/go2CommentsList";
+    }
+
+    function commonArea() {
+        window.location.href="/joys/user/go2CommonArea";
+    }
+</script>
+</html>

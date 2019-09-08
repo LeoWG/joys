@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.selffun.joys4fellow.mapper.UserMapper" >
+
+   <!-- 查询用户请求ip是否已经存在数据库 -->
+    <select id="checkIP" parameterType="Visitor" resultType="Visitor">
+        SELECT id,username,ip,total_visit_time AS totalVisitTimes FROM visitors WHERE ip = #{ip}
+    </select>
+
+    <!-- 校验用户名是否重复 -->
+    <select id="checkUsername" parameterType="Visitor" resultType="Visitor">
+        SELECT id FROM visitors WHERE username = #{username}
+    </select>
+
+    <!-- 查询用户列表 -->
+    <select id="searchUserList" resultType="map">
+        SELECT username,count(*) AS num,max(comments_time) AS latestTime FROM comments GROUP BY username
+    </select>
+
+    <!--  通过指定username查找用户的所有评论 -->
+    <select id="searchCommentsByUsername" parameterType="Comments" resultType="Comments">
+        SELECT comments FROM comments WHERE username = #{username}
+    </select>
+
+    <select id="searchLast50Comments" parameterType="Comments" resultType="Comments">
+        SELECT username,comments,comments_time AS commentsTime FROM comments ORDER BY comments_time desc limit 50
+    </select>
+
+    <!-- 保存用户的用户名和IP地址到visitors表 -->
+    <insert id="addUser" parameterType="Visitor">
+        INSERT INTO visitors (username,ip) VALUES (#{username},#{ip})
+    </insert>
+
+    <!-- 保存用户的用户名、评论内容、评论时间到comments表 -->
+    <insert id="add2Comments">
+        INSERT INTO comments (username,comments,comments_time) VALUES (#{username},#{comments},#{timestamp})
+    </insert>
+
+    <!-- 保存用户的评论时间到visitors表 -->
+    <update id="addCommentsTime" parameterType="Visitor">
+        UPDATE visitors SET latest_time = #{timestamp} WHERE ip = #{ip}
+    </update>
+
+    <!--  保存用户访问次数 -->
+    <update id="updateTotalVisitTimes" parameterType="Visitor">
+        UPDATE visitors SET total_visit_time = #{totalVisitTimes} WHERE ip = #{ip}
+    </update>
+
+
+</mapper>

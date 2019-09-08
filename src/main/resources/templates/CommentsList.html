@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>评论区</title>
+</head>
+<body>
+<h1>留言列表:(点击用户名可查看具体)</h1>
+<table style="width: 90%;background: #ccc;margin: 10px;border-collapse: collapse;">
+    <tr><td>No.</td><td>用户名</td><td>发布数</td><td>最近发布评论时间</td></tr>
+    <tr th:each="user,memberStat:${resultList}">
+        <td th:text="${memberStat.index + 1}"/>
+        <td style="color: cornflowerblue;text-decoration: underline" onclick="jump(this);"  th:text="${user.username}"></td>
+        <td th:text="${user.num}"/>
+        <td th:text="${user.latestTime}"/>
+    </tr>
+</table>
+<button style="width: 100px;height: 50px;font-size: 14px;" onclick="back();">返回上一级</button>
+</body>
+<script>
+    function jump(obj){
+        var username = obj.innerHTML;
+        var url ="/joys/user/viewUserComments?username="+username;
+        window.location.href=url;
+    }
+
+    function back(){
+        window.location.href="/joys/user/back2IndividualPage";
+    }
+</script>
+</html>

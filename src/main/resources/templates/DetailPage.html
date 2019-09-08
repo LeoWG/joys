@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>用户详情页</title>
+</head>
+<br>
+<h1 th:text="${username}+的个人主页"></h1></br>
+<table style="width: 90%;background: #ccc;margin: 10px;border-collapse: collapse;">
+    <tr><td>No.</td><td>评论详情</td></tr>
+    <tr th:each="comments,memberStat:${resultList}">
+        <td th:text="${memberStat.index + 1}"/>
+        <td th:text="${comments.comments}"/>
+    </tr>
+</table>
+<button style="width: 100px;height: 50px;font-size: 14px;" onclick="back();">返回上一级</button>
+</body>
+<script>
+    function back(){
+        window.location.href="/joys/user/back2CommentsList";
+    }
+</script>
+</html>
