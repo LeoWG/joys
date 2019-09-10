@@ -1,6 +1,5 @@
 package com.selffun.joys4fellow.service;
 
-import com.selffun.joys4fellow.entity.Comments;
 import com.selffun.joys4fellow.entity.Visitor;
 import com.selffun.joys4fellow.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
