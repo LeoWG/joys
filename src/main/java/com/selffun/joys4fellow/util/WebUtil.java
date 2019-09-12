@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
  * IP工具类
  */
 
-public class IpUtil {
+public final class WebUtil {
     /**
      * 获取客户端真实IP
      * @param request request本体

@@ -2,7 +2,7 @@ package com.selffun.joys4fellow.controller;
 
 import com.selffun.joys4fellow.entity.Visitor;
 import com.selffun.joys4fellow.service.UserService;
-import com.selffun.joys4fellow.util.IpUtil;
+import com.selffun.joys4fellow.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +29,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/loginHtml"})
     public String loginHtml(HashMap<String, Object> map,HttpServletRequest request) {
-        String ip = IpUtil.getRealIp(request);//得到用户请求的ip地址
+        String ip = WebUtil.getRealIp(request);//得到用户请求的ip地址
         Visitor visitor = userService.checkIP(ip);//通过ip来查询数据库看用户是否已经登陆注册过
         if(visitor!=null){
             long totalVisitTimes = visitor.getTotalVisitTimes();;//查询用户访问次数
@@ -45,7 +45,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/userLogin"})
     public String userLogin(HashMap<String, Object> map,HttpServletRequest request, @RequestParam("username") String username){
-        String ip = IpUtil.getRealIp(request);
+        String ip = WebUtil.getRealIp(request);
         Visitor visitor1 = userService.checkIP(ip);//通过ip来查询数据库看用户是否已经登陆注册过
         Visitor visitor2 = userService.checkUsername(username);
         if(visitor1==null&&visitor2 == null){//如果不存在用户名并且不存在IP地址
@@ -69,7 +69,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/commentsCommit"})
     public String commentsCommit(HashMap<String, Object> map,HttpServletRequest request,@RequestParam("comments") String comments){
-        String ip = IpUtil.getRealIp(request);//得到用户IP地址
+        String ip =WebUtil.getRealIp(request);//得到用户IP地址
         Date date = new Date(System.currentTimeMillis());
         Timestamp timestamp = new Timestamp(date.getTime());
         int res1 = userService.addCommentsTime(ip,timestamp);
@@ -112,7 +112,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/back2IndividualPage"})
     public String back2IndividualPage(HashMap<String, Object> map,HttpServletRequest request){
-        String ip = IpUtil.getRealIp(request);
+        String ip = WebUtil.getRealIp(request);
         Visitor visitor = userService.checkIP(ip);
         map.put("username",visitor.getUsername());
         return "IndividualPage";
