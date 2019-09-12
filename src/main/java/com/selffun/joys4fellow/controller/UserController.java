@@ -2,6 +2,7 @@ package com.selffun.joys4fellow.controller;
 
 import com.selffun.joys4fellow.entity.Visitor;
 import com.selffun.joys4fellow.service.UserService;
+import com.selffun.joys4fellow.util.IpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/loginHtml"})
     public String loginHtml(HashMap<String, Object> map,HttpServletRequest request) {
-        String ip = getRealIp(request);//得到用户请求的ip地址
+        String ip = IpUtil.getRealIp(request);//得到用户请求的ip地址
         Visitor visitor = userService.checkIP(ip);//通过ip来查询数据库看用户是否已经登陆注册过
         if(visitor!=null){
             long totalVisitTimes = visitor.getTotalVisitTimes();;//查询用户访问次数
@@ -44,7 +45,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/userLogin"})
     public String userLogin(HashMap<String, Object> map,HttpServletRequest request, @RequestParam("username") String username){
-        String ip = getRealIp(request);
+        String ip = IpUtil.getRealIp(request);
         Visitor visitor1 = userService.checkIP(ip);//通过ip来查询数据库看用户是否已经登陆注册过
         Visitor visitor2 = userService.checkUsername(username);
         if(visitor1==null&&visitor2 == null){//如果不存在用户名并且不存在IP地址
@@ -68,7 +69,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/commentsCommit"})
     public String commentsCommit(HashMap<String, Object> map,HttpServletRequest request,@RequestParam("comments") String comments){
-        String ip = getRealIp(request);//得到用户IP地址
+        String ip = IpUtil.getRealIp(request);//得到用户IP地址
         Date date = new Date(System.currentTimeMillis());
         Timestamp timestamp = new Timestamp(date.getTime());
         int res1 = userService.addCommentsTime(ip,timestamp);
@@ -111,7 +112,7 @@ public class UserController {
      */
     @RequestMapping(value = {"/back2IndividualPage"})
     public String back2IndividualPage(HashMap<String, Object> map,HttpServletRequest request){
-        String ip = getRealIp(request);
+        String ip = IpUtil.getRealIp(request);
         Visitor visitor = userService.checkIP(ip);
         map.put("username",visitor.getUsername());
         return "IndividualPage";
@@ -159,30 +160,4 @@ public class UserController {
         return "CommonArea";
     }
 
-    //***************以下是不对外的接口******************
-
-    /**
-     * 获取客户端真实IP
-     * @param request request本体
-     * @return 真实ip
-     */
-    public String getRealIp(HttpServletRequest request){
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
-    }
 }
