@@ -3,6 +3,8 @@ package com.selffun.joys4fellow.controller;
 import com.selffun.joys4fellow.entity.Visitor;
 import com.selffun.joys4fellow.service.UserService;
 import com.selffun.joys4fellow.util.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     /***
      *跳转到用户登录页面
      * @return 登陆页面
@@ -70,6 +73,9 @@ public class UserController {
     @RequestMapping(value = {"/commentsCommit"})
     public String commentsCommit(HashMap<String, Object> map,HttpServletRequest request,@RequestParam("comments") String comments){
         String ip =WebUtil.getRealIp(request);//得到用户IP地址
+        logger.info("==================================");
+        logger.info("用户ip为："+ip+"的评论内容为"+comments);
+        logger.info("==================================");
         Date date = new Date(System.currentTimeMillis());
         Timestamp timestamp = new Timestamp(date.getTime());
         int res1 = userService.addCommentsTime(ip,timestamp);
