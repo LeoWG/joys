@@ -1,9 +1,18 @@
+spring:
+  profiles:
+    active: dev
+
+---
+
+#开发环境
+
 server:
-  port: 80
+  port: 8080
   servlet:
     context-path: /joys
 
 spring:
+  profiles: dev
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -12,13 +21,43 @@ spring:
         enabled: true
   datasource:
     name: test
-    url: jdbc:mysql://***?characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: *
-    password: *
+    url:
+    username:
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  redis:
+    port: 6379
+    database: 0
+    host: 127.0.0.1
+    jedis:
+      pool:
+        #最大连接数据库连接数,设 0 为没有限制
+        max-active: 8
+        #最大等待连接中的数量,设 0 为没有限制
+        max-idle: 8
+        #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+        max-wait: -1ms
+        #最小等待连接中的数量,设 0 为没有限制
+        min-idle: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+      shutdown-timeout: 100ms
 
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: com.selffun.joys4fellow.entity  # 注意：对应实体类的路径
+
+logging:
+  config: classpath:logback-boot.xml
+#level: info
+  #path: /Users/wxh/Documents/SpringBootLogging/spring/log
+
+---
+
+#生产环境
+

@@ -3,6 +3,7 @@ package com.selffun.joys4fellow.service;
 import com.selffun.joys4fellow.entity.Visitor;
 import com.selffun.joys4fellow.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -61,7 +62,9 @@ public class UserService {
     }
 
     //通过指定username查找用户的所有评论
+    @Cacheable(value = "user")  //value这个值指定缓存对应cache的名称
     public List<String> searchCommentsByUsername(String username){
+        System.out.println("------我走了数据库");
         List resultList = userMapper.searchCommentsByUsername(username);
         return resultList;
     }
