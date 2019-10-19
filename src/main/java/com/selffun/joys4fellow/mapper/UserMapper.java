@@ -1,6 +1,5 @@
 package com.selffun.joys4fellow.mapper;
 
-import com.selffun.joys4fellow.entity.Comments;
 import com.selffun.joys4fellow.entity.Visitor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

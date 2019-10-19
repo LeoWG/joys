@@ -6,6 +6,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 
+/***
+ * 项目访问swagger地址：localhost:8080/joys/swagger-ui.html
+ */
 @SpringBootApplication
 @EnableCaching
 public class JoysApplication extends SpringBootServletInitializer {
