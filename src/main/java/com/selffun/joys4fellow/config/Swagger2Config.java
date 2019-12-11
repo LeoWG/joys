@@ -45,7 +45,6 @@ public class Swagger2Config extends WebMvcConfigurationSupport{
      */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println("----进了addResourceHandlers");
         // 解决静态资源无法访问
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
